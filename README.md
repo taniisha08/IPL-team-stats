@@ -1,2 +1,3 @@
 # IPL-team-stats
-This is a pure UI Project to maintain a score board for IPL along with the details of their respective teams which is built completely using Angular JS
+This is a pure AngularJS project depicting scores of various teams and details of the same.
+## Demo @ https://taniisha08.github.io/IPL-team-stats/

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   
+    <title>IPL TEAMS</title>
+</head>
+<body> 
+ <center>
+  <img class="img-thumbnail" src="https://www.india.com/wp-content/uploads/2020/08/IPL-Logo.jpg" style="width:auto;height:200px;padding: 10px;"> 
+ </center>
+  
+    <!-- ipl score board app -->
+    <!-- <div class="jumbotron text-center bg-dark" style="padding: 15px;">
+      <img class="img-thumbnail" src="https://www.india.com/wp-content/uploads/2020/08/IPL-Logo.jpg" style="width:auto;height:200px;padding: 10px;">
+  </div> -->
+  <!-- app1 -->
+    <div class="container-fluid" ng-controller="myScoreBoard" ng-app="myApp" style="padding-top: 20px;">
+    
+  
+   
+
+    <div class="container"  style="padding-top: 10px; width: 1000px;" >
+      <!-- <div class="container-fluid alert alert-warning text-center" style="font-family:Georgia, 'Times New Roman', Times, serif;" role="alert"> -->
+        <!-- <h2>Tournament Champions</h2> 
+        <div class="row row-cols-2 row-cols-lg-5 g-4 g-lg-3 d-flex justify-content-center">
+          <div class="col">
+           <div class="container text-light bg-success border">First</div>
+            <div class="p-3 border" style="background: linear-gradient(180deg, #FCCA06 0%, #F25C19 100%);border-radius: 8px; border: 2px solid #F25C19" ><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/CSK/logos/Roundbig/CSKroundbig.png" alt="Chennai Super Kings"></div>
+          </div>
+          <div class="col"><div class="container text-light bg-success border">Second</div>
+            <div class="p-3 border" style="background: linear-gradient(180deg, #0078BC 0%, #17479E 100%);border-radius: 8px; border: 2px solid #17479E"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/DC/Logos/Roundbig/DCroundbig.png" alt="Delhi Capitals"></div>
+          </div>
+          <div class="col"><div class="container text-light bg-success border">Third</div>
+            <div class="p-3 border" style="background: linear-gradient(180deg, #1C1C1C 0%, #0B4973 100%);border-radius: 8px; border: 2px solid #0B4973"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/GT/Logos/Roundbig/GTroundbig.png" style="width: 140px;" alt="Gujrat Titans"></div>
+          </div>
+        </div> -->
+    <!-- </div> -->
+    </div><hr>
+
+    <ul class="list-group list-group-horizontal">
+      <li class="list-group-item btn btn-outline-light" type="button"  ng-click="orderByProperty('teamName')">sort by Team</li>
+      <li class="list-group-item btn btn-outline-light" type="button"  ng-click="orderByProperty('captain')">sort by Captain</li>
+      <li class="list-group-item btn btn-outline-light" type="button"  ng-click="orderByProperty('debut')">sort by Debut</li>
+      <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+      <li class="list-group-item"><input class="form-check-input" type="checkbox" ng-click="showAllTeams()">&nbsp;Show All teams</li>
+      <li class="list-group-item"><input class="form-check-input" type="checkbox" ng-model="hideCaptains">&nbsp;Hide Captains</li>
+      <li class="list-group-item"><input class="form-check-input" type="checkbox" ng-model="hideCoaches"> &nbsp;Hide Coaches </li>
+      <li class="list-group-item"><input class="form-check-input" type="checkbox" ng-model="hideDebut">&nbsp;Hide Debut</li>
+      <li class="list-group-item"><input class="form-check-input" type="checkbox" ng-model="hideMatches">&nbsp; Hide Matches </li>
+      
+    </ul>
+   
+        <nav class="navbar navbar-fluid">
+            <form class="container-fluid">
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1" style="font-size: xx-large;"> &#128269;</span>
+                <input type="text" class='form-control  text-dark' ng-model="search.teamName" style="width: 300px;font-size: larger;" placeholder="search by team">
+                <!-- <span class="input-group-text" id="basic-addon1" style="font-size: xx-large;" ng-hide="hideCoaches"> &#128269;</span>
+                <input type="text" class='form-control bg-light text-dark' ng-model="search.coach" style="width: 300px;font-size: larger;" placeholder="search by coach" ng-hide="hideCoaches"> -->
+                <span class="input-group-text" id="basic-addon1" style="font-size: xx-large;" ng-hide="hideCaptains"> &#128269;</span>
+                <input type="text" class='form-control  text-dark' ng-model="search.captain" style="width: 300px;font-size: larger;" placeholder="search by captain" ng-hide="hideCaptains">
+                <strong style="padding: 10px;font-size: large;" ng-show="!showAll">Numbers of <br> Teams Displayed:</strong>
+                <input class='form-control  text-dark' type="number" step='1' min="1" max="10" ng-model="rowLimit" ng-show="!showAll">
+              </div>
+            </form>
+          </nav>
+        <table class="table table-hover border">
+          <thead>
+              <tr style="font-size: larger;align-items: center;">
+                <!-- <th scope="col">#</th> -->
+                <th scope="col">Team</th>
+                <th scope="col" ng-hide="hideCaptains">Captain</th>
+                <th scope="col" ng-hide="hideCoaches">Coach </th>
+                <th scope="col" ng-hide="hideDebut">Debut</th>
+                <th scope="col" ng-hide="hideMatches">Matches</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  ng-repeat="team in list | filter : search | orderBy:myOrderBy | limitTo:rowLimit">
+
+                <!-- <th scope="row">{{$index+1}}</th> -->
+                <td class="bg-light text-dark" ng-click="scrollTo('teamContent');showDetails(team)">
+                  <button class="btn btn-lg btn-outline-light text-dark" style="font-family: Georgia, 'Times New Roman', Times, serif;" >
+                    <img src="{{team.teamLogo}}" style="width:70px;height: auto;" class="img-thumbnail"> &nbsp; {{team.teamName | uppercase}}
+                  </button>
+                </td>
+                <td class="text-dark" ng-hide="hideCaptains">{{team.captain}}</td>
+                <td ng-hide="hideCoaches">{{team.coach}}</td>
+                <td class="bg-light" ng-hide="hideDebut">{{team.debut}}</td>
+                <td class=" bg-light text-dark" scope="col" ng-hide="hideMatches">
+                  <button class="btn btn-md btn-success" ng-click=incrementLikes(team)>Win<strong style="font-size: larger;">&nbsp;&nbsp;{{team.like}}&nbsp;&nbsp;&nbsp;&nbsp;</strong></button>
+                  <button class="btn btn-md btn-danger" ng-click="incrementDislikes(team)">Lose<strong  style="font-size: larger;">&nbsp;&nbsp;{{team.dislikes}}</strong></button> 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="container" id="teamContent"> 
+            <div class="row g-2"  ng-show="showTeamDetails">
+              <div class="col-4"><button class="btn btn-sm btn-outline-dark" ng-click="close(team)">X</button>
+                <div class="p-3 text-center">
+                 <img src="{{image}}" style="height:100px"><p class="display-4" style="font-family: Georgia, 'Times New Roman', Times, serif;">{{Name}}</p> 
+                </div>
+              </div>
+
+              <div class="col-4 text-center">
+                <div class="p-3 border bg-dark">
+                  <img src="{{teamPicture}}" style="width: 400px;" class="img-thumbnail"> 
+                </div>
+              </div>
+             
+              <div class="col-4">
+                <div class="p-3" style="font-size: 23px;">
+                 <p>{{details}}</p> 
+                </div>
+               
+              </div>     
+            </div>
+          </div>
+          <div class="container-fluid alert alert-secondary text-center" style="font-family:Georgia, 'Times New Roman', Times, serif;" role="alert">
+            <h2>TEAMS</h2>
+        </div>
+          <div class="container text-light text-center">
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #FCCA06 0%, #F25C19 100%);border-radius: 8px; border: 2px solid #F25C19" ><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/CSK/logos/Roundbig/CSKroundbig.png" alt="Chennai Super Kings"></div>
+              </div>
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #0078BC 0%, #17479E 100%);border-radius: 8px; border: 2px solid #17479E"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/DC/Logos/Roundbig/DCroundbig.png" alt="Delhi Capitals"></div>
+              </div>
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #1C1C1C 0%, #0B4973 100%);border-radius: 8px; border: 2px solid #0B4973"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/GT/Logos/Roundbig/GTroundbig.png" style="width: 140px;" alt="Gujrat Titans"></div>
+              </div>
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #3B215D 0%, #552792 100%);border-radius: 8px; border: 2px solid #552792"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/KKR/Logos/Roundbig/KKRroundbig.png" alt=""></div>
+              </div>
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #A72056 0%, #FFCC00 100%);border-radius: 8px; border: 2px solid #FFCC00"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/LSG/Logos/Roundbig/LSGroundbig.png" alt="" style="height: 140px;"></div>
+              </div>
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #006CB7 0%, #003B7A 100%);border-radius: 8px; border: 2px solid #003B7A"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/MI/Logos/Roundbig/MIroundbig.png" alt=""></div>
+              </div>
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #D71920 0%, #84171B 100%);border-radius: 8px; border: 2px solid #84171B"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/PBKS/Logos/Roundbig/PBKSroundbig.png" alt=""></div>
+              </div>
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #EA1A85 0%, #001D48 100%);border-radius: 8px; border: 2px solid #001D48"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/RR/Logos/Roundbig/RRroundbig.png" alt="" style="height: 146px;"></div>
+              </div>
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #6A6A6A 0%, #1C1C1C 100%);border-radius: 8px; border: 2px solid #1C1C1C"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/RCB/Logos/Roundbig/RCBroundbig.png" alt=""></div>
+              </div>
+              <div class="col">
+                <div class="p-3 border" style="background: linear-gradient(180deg, #F26522 0%, #ED1A37 100%);border-radius: 8px; border: 2px solid #ED1A37"><img src="https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/SRH/Logos/Roundbig/SRHroundbig.png" alt=""></div>
+              </div>
+            </div>
+          </div>
+          <br>     
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
